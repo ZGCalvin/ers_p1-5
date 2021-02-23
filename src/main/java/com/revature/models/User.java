@@ -1,19 +1,41 @@
 package com.revature.models;
 
 
+import org.hibernate.annotations.Entity;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.Table;
+
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Objects;
 
 /**
  * Base constructs for users, store only the integer representation of roles in the db for easier role checking
  */
+
+@Entity
+@Table(appliesTo = "ers_users")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int userId;
+    @Column(name = "username")
     private String username;
+    @Column(name = "password")
     private String password;
+    @Column(name = "firstname")
     private String firstname;
+    @Column(name = "lastname")
     private String lastname;
+    @Column(name = "email")
     private String email;
+    @Column(name = "user_role_id")
     private Integer userRole;
+
     public User() {
         super();
     }

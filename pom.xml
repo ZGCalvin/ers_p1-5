@@ -66,6 +66,12 @@
             <artifactId>simple-java-mail</artifactId>
             <version>6.5.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.4.21.Final</version>
+        </dependency>
     </dependencies>
 
     <build>
