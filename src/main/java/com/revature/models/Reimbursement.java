@@ -30,9 +30,9 @@ public class Reimbursement {
     private int authorId;
     @Column(name = "resolver_id")
     private int resolverId;
-    @Column(name = "reimbursement_status")
+    @Column(name = "reimbursement_status_id")
     private ReimbursementStatus reimbursementStatus;
-    @Column(name = "reimbursement_type")
+    @Column(name = "reimbursement_type_id")
     private ReimbursementType reimbursementType;
 
 //    @OneToOne
