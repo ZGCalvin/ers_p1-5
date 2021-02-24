@@ -1,15 +1,11 @@
 package com.revature.models;
 
 
-import org.hibernate.annotations.Entity;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.Table;
 
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
@@ -17,7 +13,7 @@ import java.util.Objects;
  */
 
 @Entity
-@Table(appliesTo = "ers_users")
+@javax.persistence.Table(name = "ers_users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
