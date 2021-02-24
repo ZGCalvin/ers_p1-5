@@ -22,12 +22,16 @@ import java.io.PrintWriter;
 public class userServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+<<<<<<< HEAD
         PrintWriter out = response.getWriter();
 
 
+=======
+        System.out.println("sdasda");
+>>>>>>> c56ae9a2368876a3007bae10e9e6304bbf02676f
         Session s = HibernateUtil.getSessionFactory().openSession();
         s.beginTransaction();
-        User newUsers = new User(10,"calvin3483032","calvin123","calvin","zheng","calvin802138021@yahoo.com",1);
+        User newUsers = new User("calvin34830326","calvin123","calvin","zheng","calvin80213802@yahoot.com",1);
         s.save(newUsers);
         s.getTransaction().commit();
         s.close();

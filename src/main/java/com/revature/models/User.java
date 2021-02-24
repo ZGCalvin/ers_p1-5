@@ -1,19 +1,18 @@
 package com.revature.models;
 
 
-import org.hibernate.annotations.OptimisticLockType;
-import org.hibernate.annotations.Table;
 
-
-import javax.persistence.*;
-import java.util.Objects;
 
 /**
  * Base constructs for users, store only the integer representation of roles in the db for easier role checking
  */
 
+import javax.persistence.*;
+import java.util.Objects;
+
+
 @Entity
-@javax.persistence.Table(name = "ers_users")
+@Table(name = "ers_users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +22,9 @@ public class User {
     private String username;
     @Column(name = "password")
     private String password;
-    @Column(name = "firstname")
+    @Column(name = "first_name")
     private String firstname;
-    @Column(name = "lastname")
+    @Column(name = "last_name")
     private String lastname;
     @Column(name = "email")
     private String email;
@@ -46,6 +45,15 @@ public class User {
 
     public User(int userId, String username, String password, String firstname, String lastname, String email, Integer userRole) {
         this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.userRole = userRole;
+    }
+
+    public User( String username, String password, String firstname, String lastname, String email, Integer userRole) {
         this.username = username;
         this.password = password;
         this.firstname = firstname;
