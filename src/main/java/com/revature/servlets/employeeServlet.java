@@ -7,6 +7,7 @@ import com.revature.models.ReimbursementType;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -17,9 +18,9 @@ import java.io.PrintWriter;
         description= "Employee Screen",
         urlPatterns = {"/employeeServlet"}
 )
-public class employeeServlet {
+public class employeeServlet extends HttpServlet {
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter pt = response.getWriter();
         String amount = request.getParameter("amount");
         String description = request.getParameter("description");
@@ -27,12 +28,12 @@ public class employeeServlet {
         String status = request.getParameter("status");
         String type = request.getParameter("type");
 
-        //        User newUsers = new User("kalyb123","kalyb123","Kalyb","Levesque","kalyb123@yahoo.com",3);
         Reimbursement reimbursement = new Reimbursement(Double.valueOf(amount),description,
-                Integer.valueOf(authorId),ReimbursementStatus.valueOf(status), ReimbursementType.valueOf(type));
+                Integer.valueOf(authorId),ReimbursementStatus.getByName(status), ReimbursementType.getByName(type));
         ReimbursementsRepository reimbursementsRepository = new ReimbursementsRepository();
         reimbursementsRepository.addReimbursement(reimbursement);
 
+        pt.println("Reimbursement string: " + reimbursementsRepository.toString());
 
 
     }

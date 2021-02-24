@@ -1,8 +1,5 @@
 package com.revature.servlets;
 
-import com.revature.hibernate.users.UserRepository;
-import com.revature.hibernate.users.UserService;
-import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.util.HibernateUtil;
 import org.hibernate.Session;
@@ -31,26 +28,26 @@ public class loginServlet extends HttpServlet {
         String user = request.getParameter("username");
         String pass = request.getParameter("password");
 
+        Session s = HibernateUtil.getSessionFactory().openSession();
+        s.beginTransaction();
 
-        int role;
-        UserService userService = new UserService();
-        role = userService.authenticateRole(user,pass);
 
-        if(role == Role.ADMIN.ordinal()+1){
-            pt.println("Admin");
-        }
-        else if(role == Role.FINANCE_MANAGER.ordinal()+1){
-            pt.println("Finance Manager");
-        }
-        else if(role == Role.EMPLOYEE.ordinal()+1){
-            pt.println("Employee");
-        }
-        else{
-            pt.println("Not a valid User");
-        }
-        pt.println("Login Screen");
-        pt.println("user role number : " + role);
+        String hql = "from User u where u.username =:user AND  password =:pass";
+        Query query = s.createQuery(hql)
+                .setParameter("user", user)
+                .setParameter("pass", pass);
+        List results = query.list();
+        s.getTransaction();
+        s.close();
 
+//        if(userId.equals("123"))
+//            response.sendRedirect("https://www.youtube.com");
+        String htmlRespone = "<html>";
+        htmlRespone += "<h2>user : " + results.toString()+"</h2><br/>";
+        htmlRespone += "<a href='http://localhost:8080/ERS1.5/'>HOME</a>";
+        htmlRespone += "</html>";
+
+        pt.println(htmlRespone);
     }
 
 }

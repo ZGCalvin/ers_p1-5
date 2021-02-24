@@ -1,5 +1,13 @@
 package com.revature.models;
 
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ers_reimbursement_statuses")
 public enum ReimbursementStatus {
     // values declared within enums are constants and are comma separated
     PENDING("Pending"),
@@ -7,7 +15,12 @@ public enum ReimbursementStatus {
     DENIED("Denied"),
     CLOSED("Closed");
 
+    @Column(name="reimb_status")
     private String reimbursementStaus;
+
+
+//    @OneToOne(mappedBy = "user")
+//    private Reimbursement reimbursement;
 
     // enum constructors are implicitly private
     ReimbursementStatus(String name) {
