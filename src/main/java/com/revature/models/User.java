@@ -31,6 +31,15 @@ public class User {
     @Column(name = "user_role_id")
     private Integer userRole;
 
+
+
+//    @OneToOne(mappedBy = "user")
+//    private Reimbursement reimbusrsement;
+//
+//    @OneToOne
+//    @JoinColumn(name = "userRole")
+//    private Role role;
+
     public User() {
         super();
     }

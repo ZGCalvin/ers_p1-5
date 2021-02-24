@@ -15,11 +15,11 @@ import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet(
-        name="loginServlet",
-        description= "Login Screen",
-        urlPatterns = {"/loginServlet"}
+        name="registerServlet",
+        description= "Register",
+        urlPatterns = {"/registerServlet"}
 )
-public class loginServlet extends HttpServlet {
+public class registerServlet extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -27,27 +27,22 @@ public class loginServlet extends HttpServlet {
         PrintWriter pt = response.getWriter();
         String user = request.getParameter("username");
         String pass = request.getParameter("password");
-
+        String fname = request.getParameter("username");
+        String lname = request.getParameter("password");
+        String email = request.getParameter("username");
+        User newUser = new User(user,pass,fname,lname,email,1);
         Session s = HibernateUtil.getSessionFactory().openSession();
         s.beginTransaction();
-
-
-        String hql = "from User u where u.username =:user AND  password =:pass";
-        Query query = s.createQuery(hql)
-                .setParameter("user", user)
-                .setParameter("pass", pass);
-        List results = query.list();
-        s.getTransaction();
+        s.save(newUser);
+        s.getTransaction().commit();
         s.close();
 
-//        if(userId.equals("123"))
-//            response.sendRedirect("https://www.youtube.com");
         String htmlRespone = "<html>";
-        htmlRespone += "<h2>user : " + results.toString()+"</h2><br/>";
         htmlRespone += "<a href='http://localhost:8080/ERS1.5/'>HOME</a>";
+        htmlRespone += "<h2>user : user registered </h2><br/>";
         htmlRespone += "</html>";
 
         pt.println(htmlRespone);
-    }
 
+    }
 }
