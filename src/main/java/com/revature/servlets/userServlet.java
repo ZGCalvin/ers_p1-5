@@ -26,7 +26,7 @@ public class userServlet extends HttpServlet {
 
 //        Session s = HibernateUtil.getSessionFactory().openSession();
 //        s.beginTransaction();
-//        User newUsers = new User("calvin123","calvin123","Calvin","Zheng","calvin123yahoo.com",1);
+//        User newUsers = new User("kalyb123","kalyb123","Kalyb","Levesque","kalyb123@yahoo.com",3);
 //        s.save(newUsers);
 //        s.getTransaction().commit();
 //        s.close();

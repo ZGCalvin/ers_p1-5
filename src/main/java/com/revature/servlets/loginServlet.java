@@ -1,5 +1,8 @@
 package com.revature.servlets;
 
+import com.revature.hibernate.users.UserRepository;
+import com.revature.hibernate.users.UserService;
+import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.util.HibernateUtil;
 import org.hibernate.Session;
@@ -25,24 +28,49 @@ public class loginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         PrintWriter pt = response.getWriter();
-        String userId = request.getParameter("userId");
-        String password = request.getParameter("password");
-
-        Session s = HibernateUtil.getSessionFactory().openSession();
-        s.beginTransaction();
-
-        String baseQuery = "SELECT * FROM ers_users eu ";
-        String whereUserNPass = "WHERE username = :" + userId + " AND  password = :"+password+ " ";
-        Query query = s.createQuery(baseQuery);
-        List results = query.list();
-        s.getTransaction().commit();
-        s.close();
+        String user = request.getParameter("username");
+        String pass = request.getParameter("password");
+//        UserService userService = new UserService();
+//        int role = userService.authenticate(user,pass);
+//        for(User u: results){
+//            pt.println("User role is:" + u.getUserRole());
+//        }
 
 //        if(userId.equals("123"))
 //            response.sendRedirect("https://www.youtube.com");
 
+//        int role = 0;
+//        Session s = HibernateUtil.getSessionFactory().openSession();
+//        s.beginTransaction();
+//
+//        String baseQuery = "FROM User ";
+//        String whereUserNPass = " WHERE username = :user AND password = :pass";
+//        Query query = s.createQuery(baseQuery + whereUserNPass).setParameter("user",user).setParameter("pass",pass);
+//        List<User> results = query.getResultList();
+//        for(User u : results){
+//            role= u.getUserRole();
+//        }
+//
+//        s.getTransaction().commit();
+//        s.close();
+        int role;
+        UserService userService = new UserService();
+        role = userService.authenticateRole(user,pass);
+
+        if(role == Role.ADMIN.ordinal()+1){
+            pt.println("Admin");
+        }
+        else if(role == Role.FINANCE_MANAGER.ordinal()+1){
+            pt.println("Finance Manager");
+        }
+        else if(role == Role.EMPLOYEE.ordinal()+1){
+            pt.println("Employee");
+        }
+        else{
+            pt.println("Not a valid User");
+        }
         pt.println("Login Screen");
-        pt.println("user : " + results.toString());
+        pt.println("user role number : " + role);
     }
 
 }
