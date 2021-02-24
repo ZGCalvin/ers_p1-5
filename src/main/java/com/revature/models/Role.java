@@ -1,11 +1,18 @@
 package com.revature.models;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ers_user_roles")
 public enum Role {
     ADMIN("Admin"),
     FINANCE_MANAGER("Finance Manager"),
     EMPLOYEE("Employee"),
     DELETED("Deleted");
 
+    @Column(name="role_name")
     private String roleName;
 
     Role(String name) {
