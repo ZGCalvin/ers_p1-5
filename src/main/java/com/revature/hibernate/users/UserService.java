@@ -20,5 +20,12 @@ public class UserService {
         return userRepo.getRole(username,password);
     }
 
+    public User authenticate(String username, String password){
+        if (username == null || username.trim().equals("") || password == null || password.trim().equals("")){
+            throw new RuntimeException("Invalid credentials provided");
+        }
+        return userRepo.getUser(username,password);
+    }
+
 
 }
