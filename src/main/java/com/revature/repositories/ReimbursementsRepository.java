@@ -21,15 +21,20 @@ public class ReimbursementsRepository {
     //base query that combines the name and resolver names from one query
     private String baseQuery = "SELECT er.id, er.amount, er.description, er.reimbursement_status_id, \n" +
             "er.reimbursement_type_id, er.resolved, er.submitted,  er.author_id , er.resolver_id,\n" +
+
             "author.first_name as author_first_name , author.last_name as author_last_name , \n" +
+
             "resolver.first_name as resolver_first_name, resolver.last_name as resolver_last_name\n" +
-            "FROM project_1.ers_reimbursements er\n" +
-            "left join project_1.ers_users author \n" +
-            "on er.author_id = author.id\n" +
-            "left join project_1.ers_users resolver \n" +
-            "on er.resolver_id = resolver.id ";
-    private String baseInsert = "INSERT INTO project_1.ers_reimbursements ";
-    private String baseUpdate = "UPDATE project_1.ers_reimbursements er ";
+
+
+            "FROM ers_reimbursements er\n" +
+
+            "left join ers_users author \n" + "on er.author_id = author.id\n" +
+
+            "left join ers_users resolver \n" + "on er.resolver_id = resolver.id ";
+
+    private String baseInsert = "INSERT INTO ers_reimbursements ";
+    private String baseUpdate = "UPDATE ers_reimbursements er ";
 
     public ReimbursementsRepository(){
         super();
