@@ -1,7 +1,13 @@
 package com.revature.models;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.io.File;
+import java.sql.Blob;
 import java.sql.Timestamp;
 import java.util.Objects;
 
@@ -18,17 +24,24 @@ public class Reimbursement {
     private Integer id;
     @Column(name = "amount")
     private Double amount;
-    @Column(name = "submitted")
+
+    @Generated(value = GenerationTime.INSERT)
+    @ColumnDefault(value = "CURRENT_TIMESTAMP")
+    @Column(name = "submitted", nullable = false, columnDefinition = "timestamp default CURRENT_TIMESTAMP")
     private Timestamp submitted;
     @Column(name = "resolved")
     private Timestamp resolved;
     @Column(name = "description")
     private String description;
-    @Column(name = "receipt")
-    private File receipt;
+
+    @Type(type="org.hibernate.type.BinaryType")
+    @Column(name = "receipt", columnDefinition = "bytea")
+    private byte[] receipt;
     @Column(name = "author_id")
     private int authorId;
-    @Column(name = "resolver_id")
+
+    @Column(name = "resolver_id", columnDefinition = "int4 NULL")
+    @ColumnDefault(value = "NULL")
     private int resolverId;
     @Column(name = "reimbursement_status_id")
     private ReimbursementStatus reimbursementStatus;
@@ -85,11 +98,11 @@ public class Reimbursement {
         this.reimbursementType = reimbursementType;
     }
 
-    public File getReceipt() {
+    public byte[] getReceipt() {
         return receipt;
     }
 
-    public void setReceipt(File receipt) {
+    public void setReceipt(byte[] receipt) {
         this.receipt = receipt;
     }
 
