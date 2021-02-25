@@ -37,21 +37,35 @@ public class Reimbursement {
     @Type(type="org.hibernate.type.BinaryType")
     @Column(name = "receipt", columnDefinition = "bytea")
     private byte[] receipt;
-    @Column(name = "author_id")
+    @Column(name = "author_id")//, insertable = false, updatable=false)
     private int authorId;
 
-    @Column(name = "resolver_id", columnDefinition = "int4 NULL")
+    @Column(name = "resolver_id", columnDefinition = "int4 NULL", insertable = false, updatable=false)
     @ColumnDefault(value = "NULL")
     private int resolverId;
     @Column(name = "reimbursement_status_id")
+    //@Convert(converter = ReimbursementTypeConverter.class)
     private ReimbursementStatus reimbursementStatus;
     @Column(name = "reimbursement_type_id")
     private ReimbursementType reimbursementType;
 
-//    @OneToOne
-//    @JoinColumn(name = "author_id")
-//    @JoinColumn(name = "resolver_id")
+
+    @ManyToOne
+    @JoinColumn(name = "resolver_id", referencedColumnName = "id")
+    private User user;
+//    @ManyToOne
+//    @JoinColumn(name = "author_id", referencedColumnName = "id")
 //    private User user;
+
+
+//    @OneToOne
+//    @JoinColumn(name = "resolver_id", referencedColumnName = "id")
+//    private User user;
+//
+//    @OneToOne
+//    @JoinColumn(name = "author_id", referencedColumnName = "id")
+//    private User user2;
+
 //
 //    @OneToOne
 //    @JoinColumn(name = "resolver_id")

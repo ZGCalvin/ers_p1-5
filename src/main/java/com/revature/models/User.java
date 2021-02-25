@@ -9,6 +9,7 @@ package com.revature.models;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 
 @Entity
@@ -32,10 +33,16 @@ public class User {
     private Integer userRole;
 
 
+    @OneToMany(mappedBy="user")
+    private Set<Reimbursement> reimbursements;
+
 
 //    @OneToOne(mappedBy = "user")
-//    private Reimbursement reimbusrsement;
+//    private Reimbursement reimbusrsement1;
 //
+//    @OneToOne(mappedBy = "user2")
+//    private Reimbursement reimbusrsement2;
+////
 //    @OneToOne
 //    @JoinColumn(name = "userRole")
 //    private Role role;

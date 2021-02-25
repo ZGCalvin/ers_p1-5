@@ -25,11 +25,15 @@ public class employeeServlet extends HttpServlet {
         String amount = request.getParameter("amount");
         String description = request.getParameter("description");
         String authorId = request.getParameter("authorId");
-//        String status = request.getParameter("status");
+        String status = request.getParameter("status");
         String type = request.getParameter("type");
 
-        Reimbursement reimbursement = new Reimbursement(Double.valueOf(amount),description,
-                Integer.valueOf(authorId),ReimbursementStatus.getByNumber(2), ReimbursementType.getByName(type));
+        Reimbursement reimbursement = new Reimbursement(
+                Double.valueOf(amount),//amount
+                description,//description
+                Integer.parseInt(authorId),//author ID
+                ReimbursementStatus.getByNumber(2),//reimbursement status
+                ReimbursementType.getByName(type));// reimbursement type
         ReimbursementsRepository reimbursementsRepository = new ReimbursementsRepository();
         reimbursementsRepository.addReimbursement(reimbursement);
 

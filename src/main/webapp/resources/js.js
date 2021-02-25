@@ -7,6 +7,9 @@ $(document).ready(function(){
 	$("#registerform").click(function(){
     	$("#body").load("resources/registerform.html");
     });
+    $("#empform").click(function(){
+       	$("#body").load("resources/empform.html");
+    });
 
   
   });

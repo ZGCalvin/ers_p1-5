@@ -8,7 +8,7 @@ import javax.persistence.OneToOne;
 
 import javax.persistence.Table;
 
-@Entity
+//@Entity
 @Table(name = "ers_user_roles")
 public enum Role {
     ADMIN("Admin"),
