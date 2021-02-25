@@ -22,24 +22,29 @@ public class SessionServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        System.out.println("GET TEST");
 //        String ssn = (String) req.getSession().getAttribute("ssn");
         resp.getWriter().write(req.getSession().getId());
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        System.out.println("TEST 1");
         ObjectMapper mapper = new ObjectMapper();
+        System.out.println("TEST 2");
         PrintWriter respWriter = resp.getWriter();
+        System.out.println("TEST 3");
         resp.setContentType("application/json");
+        System.out.println("TEST 4");
 
         try {
-
+            System.out.println("TEST 5"+req.getInputStream());
             Credentials creds = mapper.readValue(req.getInputStream(), Credentials.class);
+            System.out.println("TEST 6");
             System.out.printf("Attempting to authenticate user, %s, with provided credentials", creds.getUsername());
-
+            System.out.println("TEST 7");
             User authUser = userService.authenticate(creds.getUsername(), creds.getPassword());
+            System.out.println("TEST 8 "+ authUser.getUserId());
             System.out.println("User succesffuly authenticated!");
             respWriter.write(mapper.writeValueAsString(authUser));
 

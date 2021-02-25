@@ -42,7 +42,8 @@ public class Reimbursement {
 
     @Column(name = "resolver_id", columnDefinition = "int4 NULL", insertable = false, updatable=false)
     @ColumnDefault(value = "NULL")
-    private int resolverId;
+    private Integer resolverId;
+
     @Column(name = "reimbursement_status_id")
     //@Convert(converter = ReimbursementTypeConverter.class)
     private ReimbursementStatus reimbursementStatus;
