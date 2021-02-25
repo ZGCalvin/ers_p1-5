@@ -40,9 +40,10 @@ public class Reimbursement {
     @Column(name = "author_id")//, insertable = false, updatable=false)
     private int authorId;
 
-    @Column(name = "resolver_id", columnDefinition = "int4 NULL", insertable = false, updatable=false)
-    @ColumnDefault(value = "NULL")
-    private int resolverId;
+//    @Column(name = "resolver_id", columnDefinition = "int4 NULL", insertable = false, updatable=false)
+//    @ColumnDefault(value = "NULL")
+    @Column(name = "resolver_id", columnDefinition = "int4 NULL",insertable = false, updatable=false)
+    private Integer resolverId;
     @Column(name = "reimbursement_status_id")
     //@Convert(converter = ReimbursementTypeConverter.class)
     private ReimbursementStatus reimbursementStatus;
