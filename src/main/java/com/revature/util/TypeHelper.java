@@ -4,9 +4,17 @@ import com.revature.models.ReimbursementType;
 
 import javax.persistence.AttributeConverter;
 
+/**
+ * helper method so that the Type can be converted from an integer into an ENUM and vise versa
+ */
 public class TypeHelper implements AttributeConverter<ReimbursementType,Integer> {
 
 
+    /**
+     * converts from an ENUM to an Integer
+     * @param reimbursementType the ENUM passed in that we need to use but have to  convert to Integer first
+     * @return the Integer representation of the Type
+     */
     @Override
     public Integer convertToDatabaseColumn(ReimbursementType reimbursementType) {
         if (reimbursementType == null) {
@@ -26,6 +34,12 @@ public class TypeHelper implements AttributeConverter<ReimbursementType,Integer>
         }
     }
 
+
+    /**
+     *  converts the Integer passed in back into the ENUM representation of it
+     * @param integer the integer representation of the ENUM
+     * @return the ENUM type of the integer passed in
+     */
     @Override
     public ReimbursementType convertToEntityAttribute(Integer integer) {
         if (integer == null) {

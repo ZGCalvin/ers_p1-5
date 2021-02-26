@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
+/**
+ * This gets a persistent session that can keep information even when on servlet goes to another
+ */
 public class UserSession {
 
         private static final UserSession userSession = new UserSession();
@@ -23,6 +26,12 @@ public class UserSession {
                 return session;
         }
 
+    /**
+     *
+     * @param request  take in the user request information
+     * @param loginuser take in the User object with the information and set the attribute of the session to its fields
+     * @return  returns a HttpSession so that we can get the session back and still use it later
+     */
         public HttpSession createSession(HttpServletRequest request, User loginuser){
             session = request.getSession();
             session.setAttribute("user_id",loginuser.getUserId());
