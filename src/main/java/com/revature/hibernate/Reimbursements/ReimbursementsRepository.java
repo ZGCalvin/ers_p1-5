@@ -16,16 +16,27 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class is responsible for getting data from the database using hibernate
+ */
 public class ReimbursementsRepository {
+
     private Session s;
     private StatusHelper statusHelper;
     private String baseInsert = "INSERT INTO Reimbursement ";
 
+    /**
+     * Constructor for initializating hibernate session and statusHelper
+     */
     public ReimbursementsRepository(){
         s = HibernateUtil.getSessionFactory().openSession();
         statusHelper = new StatusHelper();
     }
 
+    /**
+     * Adds a reimbursement row into the database
+     * @param reimbursement
+     */
     public void addReimbursement(Reimbursement reimbursement){
 
         s.beginTransaction();
@@ -35,6 +46,10 @@ public class ReimbursementsRepository {
 
     }
 
+    /**
+     * returns a list of all Reimbursement in the Reimbursement table
+     * @return list of all reimbursement
+     */
     public List viewAllReimbursement(){
         s.beginTransaction();
         Query query = s.createQuery("From Reimbursement ");
@@ -54,6 +69,11 @@ public class ReimbursementsRepository {
 //        return results;
 //    }
 
+    /**
+     * returns a list of all Reimbursement for a specific employee
+     * @param id
+     * @return a list of all Reimbursement for a specific employee
+     */
     public List viewAllReimbursementEmployee(Integer id){
         s.beginTransaction();
         Query query = s.createQuery("From Reimbursement r WHERE authorId = :id ")
@@ -65,6 +85,12 @@ public class ReimbursementsRepository {
     }
 
 
+    /**
+     * return one row containing the information about one Reimbursement
+     * @param id
+     * @param reimId
+     * @return one row containing the information about one Reimbursement
+     */
     public List<Reimbursement> viewOneReimbursementEmployee(Integer id, Integer reimId){
         s.beginTransaction();
         Query query = s.createQuery("From Reimbursement WHERE authorId =: id and id = :reimId")
@@ -76,6 +102,11 @@ public class ReimbursementsRepository {
         return results;
     }
 
+    /**
+     * returns all reimbursement by status code
+     * @param Status
+     * @return returns all reimbursement by status code
+     */
     public List viewAllReimbursementbyStatus(ReimbursementStatus Status){
         int statusnum = -1;
         s.beginTransaction();
@@ -95,6 +126,11 @@ public class ReimbursementsRepository {
         return results;
     }
 
+    /**
+     * returns all Reimbursement by the type of reimbursement
+     * @param Type
+     * @return returns all Reimbursement by the type of reimbursement
+     */
     public List viewAllReimbursementbyType(ReimbursementType Type){
 
         s.beginTransaction();
@@ -109,6 +145,11 @@ public class ReimbursementsRepository {
         return results;
     }
 
+    /**
+     * this method is able to get the reimbursement by the id
+     * @param reimbursementId
+     * @return get reimbursement by the id
+     */
     public Optional<Reimbursement> getReimbursementById(Integer reimbursementId){
         Optional reimbursement = Optional.empty();
 
@@ -123,6 +164,13 @@ public class ReimbursementsRepository {
             s.close();
         return reimbursement;
     }
+
+    /**
+     * this method updates Resolver ID by using Reimbursement Id
+     * @param reimbursementId
+     * @param resolverId
+     * @return true if updates Resolver ID by using Reimbursement Id else false
+     */
     public boolean updateResolverByReimbursementId(Integer reimbursementId, Integer resolverId ){
         boolean updated = false;
         Reimbursement reimbursement = null;
@@ -142,6 +190,13 @@ public class ReimbursementsRepository {
         return updated;
     }
 
+    /**
+     * This method updates the status and time by reimbursement id
+     * @param reimbursementId
+     * @param date
+     * @param status
+     * @return true if its updated else false
+     */
    public boolean updateStatusTime(Integer reimbursementId, Timestamp date, ReimbursementStatus status){
         boolean updated = false;
 
@@ -162,6 +217,14 @@ public class ReimbursementsRepository {
         return updated;
     }
 
+    /**
+     * This method updates all pending rows
+     * @param reimbursementId
+     * @param amount
+     * @param description
+     * @param type
+     * @return true if updated was successful else false
+     */
     public boolean updatePendingRowAll(Integer reimbursementId, Double amount, String description, ReimbursementType type){
 
         boolean updated = false;
@@ -197,6 +260,12 @@ public class ReimbursementsRepository {
     }
 
 
+    /**
+     * Updated the type of reimbursement using reimbursement id
+     * @param reimbursementId
+     * @param type
+     * @return true if its updated else false
+     */
     public boolean updatePendingRowType(Integer reimbursementId, ReimbursementType type){
 
         boolean updated = false;
@@ -230,6 +299,12 @@ public class ReimbursementsRepository {
     }
 
 
+    /**
+     * this method updates amount using reimbursement id
+     * @param reimbursementId
+     * @param amount
+     * @return true if updated else false
+     */
     public boolean updatePendingRowAmount(Integer reimbursementId, Double amount){
 
         boolean updated = false;
@@ -262,6 +337,12 @@ public class ReimbursementsRepository {
 
     }
 
+    /**
+     * this method updates the description using reimbursement ID
+     * @param reimbursementId
+     * @param description
+     * @return true if it's updated else false
+     */
     public boolean updatePendingRowDescription(Integer reimbursementId, String description){
 
         boolean updated = false;
