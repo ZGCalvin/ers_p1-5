@@ -25,6 +25,7 @@ public class UserRepository {
         for(User u : results){
             role= u.getUserRole();
         }
+
         s.getTransaction().commit();
         s.close();
 
@@ -34,11 +35,12 @@ public class UserRepository {
 
     public User getUser(String username, String password){
         int role = 0;
-        User user = null;
-        s.beginTransaction();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        User user = new User();
+        session.beginTransaction();
         String baseQuery = "FROM User ";
         String whereUserNPass = " WHERE username = :user AND password = :pass";
-        Query query = s.createQuery(baseQuery + whereUserNPass).setParameter("user",username).setParameter("pass",password);
+        Query query = session.createQuery(baseQuery + whereUserNPass).setParameter("user",username).setParameter("pass",password);
         List<User> results = query.getResultList();
         for(User u : results){
             user.setUserId(u.getUserId());
@@ -48,8 +50,8 @@ public class UserRepository {
             user.setLastname(u.getLastname());
             user.setUserRole(u.getUserRole());
         }
-        s.getTransaction().commit();
-        s.close();
+        session.getTransaction().commit();
+        session.close();
 
         return user;
     }
