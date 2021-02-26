@@ -5,8 +5,10 @@ import org.hibernate.cfg.Configuration;
 
 import java.io.File;
 
+/**
+ * This class creates the SesisonFactory using the hibernate.cfg.xml file
+ */
 public class HibernateUtil {
-
 
 
     private static final SessionFactory sessionFactory = buildSessionFactory();
