@@ -32,6 +32,7 @@ public class Session {
         httpSession.setAttribute("userId", user.getUserId());
         httpSession.setAttribute("username", user.getUsername());
         httpSession.setAttribute("userRole", user.getUserRole());
+        httpSession.setMaxInactiveInterval(10*60);
         sessionList.add(httpSession);
 
     }

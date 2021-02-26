@@ -51,22 +51,8 @@ public class loginServlet extends HttpServlet {
         HttpSession session = UserSession.getUserSession().createSession(request,userService.authenticate(user,pass));
 
         if(role == Role.ADMIN.ordinal()+1){
-
-          // User loginuser = userService.authenticate(user,pass);
-            //User loginuser = userRepository.getUser(user,pass);
-//            HttpSession session = request.getSession();
-//            session.setAttribute("user_id",loginuser.getUserId());
-//            session.setAttribute("username",loginuser.getUsername());
-//            session.setAttribute("fullname",loginuser.getFirstname() + " " + loginuser.getLastname());
-//            session.setAttribute("email",loginuser.getEmail());
-//            session.setAttribute("role",loginuser.getUserRole());
-
-   //         pt.println("Hello Welcome " + session.getAttribute("fullname"));
-//            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/dashboardServlet");
-//            requestDispatcher.forward(request, response);
-
             pt.println("Session User: "+ session.getAttribute("fullname"));
-            response.sendRedirect("/ERS1.5/dashboardServlet");
+//            response.sendRedirect("/ERS1.5/adminServlet");
 
         }
         else if(role == Role.FINANCE_MANAGER.ordinal()+1){

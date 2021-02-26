@@ -1,5 +1,8 @@
 package com.revature.hibernate.users;
 
+import com.revature.models.Reimbursement;
+import com.revature.models.ReimbursementStatus;
+import com.revature.models.ReimbursementType;
 import com.revature.models.User;
 import com.revature.util.HibernateUtil;
 import org.hibernate.Session;
@@ -55,4 +58,115 @@ public class UserRepository {
 
         return user;
     }
+
+    public void addUser(User user){
+        s.beginTransaction();
+        s.save(user);
+        s.getTransaction().commit();
+        s.close();
+
+    }
+
+    public boolean deleteUser(Integer id){
+
+            boolean updated = false;
+
+           User user;
+            try {
+                    s.beginTransaction();
+                    user = s.get(User.class, id);
+                    s.delete(user);
+                    s.getTransaction().commit();
+                    updated = true;
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+            s.close();
+            return updated;
+
+        }
+
+    public boolean updatePassword(Integer id,String password){
+
+        boolean updated = false;
+        User user;
+        try {
+            s.beginTransaction();
+            user = s.get(User.class, id);
+            user.setPassword(password);
+            s.save(user);
+            s.getTransaction().commit();
+            updated = true;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        s.close();
+        return updated;
+
+    }
+
+    public boolean updateEmail(Integer id,String email){
+
+        boolean updated = false;
+        User user;
+        try {
+            s.beginTransaction();
+            user = s.get(User.class, id);
+            user.setEmail(email);
+            s.save(user);
+            s.getTransaction().commit();
+            updated = true;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        s.close();
+        return updated;
+
+    }
+
+    public boolean updateFirstLast(Integer id,String first,String last){
+
+        boolean updated = false;
+        User user;
+        try {
+            s.beginTransaction();
+            user = s.get(User.class, id);
+            user.setFirstname(first);
+            user.setLastname(last);
+            s.save(user);
+            s.getTransaction().commit();
+            updated = true;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        s.close();
+        return updated;
+
+    }
+
+    public boolean updateStatus(Integer id,Integer role){
+
+        boolean updated = false;
+        User user;
+        try {
+            s.beginTransaction();
+            user = s.get(User.class, id);
+            user.setUserRole(role);
+            s.save(user);
+            s.getTransaction().commit();
+            updated = true;
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        s.close();
+        return updated;
+
+    }
+
+
 }
