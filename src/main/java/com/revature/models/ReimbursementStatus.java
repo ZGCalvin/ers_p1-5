@@ -8,8 +8,8 @@ import javax.persistence.OneToOne;
 
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "ers_reimbursement_statuses")
+//@Entity
+//@Table(name = "ers_reimbursement_statuses")
 public enum ReimbursementStatus {
     // values declared within enums are constants and are comma separated
     PENDING("Pending"),
@@ -17,7 +17,7 @@ public enum ReimbursementStatus {
     DENIED("Denied"),
     CLOSED("Closed");
 
-    @Column(name="reimb_status")
+//    @Column(name="reimb_status")
     private String reimbursementStaus;
 
 

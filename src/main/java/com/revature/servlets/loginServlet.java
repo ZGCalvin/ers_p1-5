@@ -8,11 +8,13 @@ import com.revature.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -33,11 +35,21 @@ public class loginServlet extends HttpServlet {
 
 
         int role;
+        HttpSession session = request.getSession();
         UserService userService = new UserService();
-        role = userService.authenticateRole(user,pass);
 
+        role = userService.authenticateRole(user,pass);
+        User loginuser = userService.authenticate(user,pass);
         if(role == Role.ADMIN.ordinal()+1){
             pt.println("Admin");
+            session.setAttribute("user_id",loginuser.getUserId());
+            session.setAttribute("username",loginuser.getUsername());
+            session.setAttribute("fullname",loginuser.getPassword() + " " + loginuser.getLastname());
+            session.setAttribute("email",loginuser.getEmail());
+            session.setAttribute("role",loginuser.getUserRole());
+
+            pt.println("<p> Hello Weclome "+session.getAttribute("fullname") +"</p>");
+            //RequestDispatcher requestDispatcher = request.getRequestDispatcher("/dashboard");
         }
         else if(role == Role.FINANCE_MANAGER.ordinal()+1){
             pt.println("Finance Manager");
@@ -48,6 +60,7 @@ public class loginServlet extends HttpServlet {
         else{
             pt.println("Not a valid User");
         }
+
         pt.println("Login Screen");
         pt.println("user role number : " + role);
 

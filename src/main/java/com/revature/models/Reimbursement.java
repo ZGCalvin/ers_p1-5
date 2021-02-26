@@ -1,5 +1,7 @@
 package com.revature.models;
 
+import com.revature.util.StatusHelper;
+import com.revature.util.TypeHelper;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
@@ -46,8 +48,10 @@ public class Reimbursement {
     private Integer resolverId;
     @Column(name = "reimbursement_status_id")
     //@Convert(converter = ReimbursementTypeConverter.class)
+    @Convert(converter = StatusHelper.class)
     private ReimbursementStatus reimbursementStatus;
     @Column(name = "reimbursement_type_id")
+    @Convert(converter = TypeHelper.class)
     private ReimbursementType reimbursementType;
 
 
@@ -177,6 +181,9 @@ public class Reimbursement {
         this.resolverId = resolverId;
     }
 
+    public void setResolver(User resolver){
+        this.user = resolver;
+    }
     public ReimbursementStatus getReimbursementStatus() {
         return reimbursementStatus;
     }
