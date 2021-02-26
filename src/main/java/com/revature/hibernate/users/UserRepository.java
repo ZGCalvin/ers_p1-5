@@ -5,6 +5,7 @@ import com.revature.models.ReimbursementStatus;
 import com.revature.models.ReimbursementType;
 import com.revature.models.User;
 import com.revature.util.HibernateUtil;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -30,17 +31,21 @@ public class UserRepository {
      */
     public int getRole(String username, String password){
         int role = 0;
-        s.beginTransaction();
-        String baseQuery = "FROM User ";
-        String whereUserNPass = " WHERE username = :user AND password = :pass";
-        Query query = s.createQuery(baseQuery + whereUserNPass).setParameter("user",username).setParameter("pass",password);
-        List<User> results = query.getResultList();
-        for(User u : results){
-            role= u.getUserRole();
-        }
+        try {
+            s.beginTransaction();
+            String baseQuery = "FROM User ";
+            String whereUserNPass = " WHERE username = :user AND password = :pass";
+            Query query = s.createQuery(baseQuery + whereUserNPass).setParameter("user", username).setParameter("pass", password);
+            List<User> results = query.getResultList();
+            for (User u : results) {
+                role = u.getUserRole();
+            }
 
-        s.getTransaction().commit();
-        s.close();
+            s.getTransaction().commit();
+            s.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
 
         return role;
     }
@@ -56,21 +61,25 @@ public class UserRepository {
         int role = 0;
         Session session = HibernateUtil.getSessionFactory().openSession();
         User user = new User();
-        session.beginTransaction();
-        String baseQuery = "FROM User ";
-        String whereUserNPass = " WHERE username = :user AND password = :pass";
-        Query query = session.createQuery(baseQuery + whereUserNPass).setParameter("user",username).setParameter("pass",password);
-        List<User> results = query.getResultList();
-        for(User u : results){
-            user.setUserId(u.getUserId());
-            user.setUsername(u.getUsername());
-            user.setPassword(u.getPassword());
-            user.setFirstname(u.getFirstname());
-            user.setLastname(u.getLastname());
-            user.setUserRole(u.getUserRole());
+        try {
+            session.beginTransaction();
+            String baseQuery = "FROM User ";
+            String whereUserNPass = " WHERE username = :user AND password = :pass";
+            Query query = session.createQuery(baseQuery + whereUserNPass).setParameter("user", username).setParameter("pass", password);
+            List<User> results = query.getResultList();
+            for (User u : results) {
+                user.setUserId(u.getUserId());
+                user.setUsername(u.getUsername());
+                user.setPassword(u.getPassword());
+                user.setFirstname(u.getFirstname());
+                user.setLastname(u.getLastname());
+                user.setUserRole(u.getUserRole());
+            }
+            session.getTransaction().commit();
+            session.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
         }
-        session.getTransaction().commit();
-        session.close();
 
         return user;
     }
@@ -80,11 +89,14 @@ public class UserRepository {
      * @param user takes in the user object given and saves it to the database
      */
     public void addUser(User user){
-        s.beginTransaction();
-        s.save(user);
-        s.getTransaction().commit();
-        s.close();
-
+        try {
+            s.beginTransaction();
+            s.save(user);
+            s.getTransaction().commit();
+            s.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -223,11 +235,16 @@ public class UserRepository {
      * @return returns a List of all the users
      */
     public List viewAllUsers(){
-        s.beginTransaction();
-        Query query = s.createQuery("From User");
-        List results = query.getResultList();
-        s.getTransaction().commit();
-        s.close();
+        List results = null;
+        try {
+            s.beginTransaction();
+            Query query = s.createQuery("From User");
+            results = query.getResultList();
+            s.getTransaction().commit();
+            s.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
         return results;
     }
 

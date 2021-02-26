@@ -39,10 +39,14 @@ public class ReimbursementsRepository {
      */
     public void addReimbursement(Reimbursement reimbursement){
 
-        s.beginTransaction();
-        s.save(reimbursement);
-        s.getTransaction().commit();
-        s.close();
+        try {
+            s.beginTransaction();
+            s.save(reimbursement);
+            s.getTransaction().commit();
+            s.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -51,11 +55,18 @@ public class ReimbursementsRepository {
      * @return list of all reimbursement
      */
     public List viewAllReimbursement(){
-        s.beginTransaction();
-        Query query = s.createQuery("From Reimbursement ");
-        List results = query.getResultList();
-        s.getTransaction().commit();
-        s.close();
+        List results = null;
+        try {
+            s.beginTransaction();
+            Query query = s.createQuery("From Reimbursement ");
+             results = query.getResultList();
+            s.getTransaction().commit();
+            s.close();
+            return results;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         return results;
     }
 
@@ -75,12 +86,17 @@ public class ReimbursementsRepository {
      * @return a list of all Reimbursement for a specific employee
      */
     public List viewAllReimbursementEmployee(Integer id){
-        s.beginTransaction();
-        Query query = s.createQuery("From Reimbursement r WHERE authorId = :id ")
-                .setParameter("id",id);
-        List results = query.getResultList();
-        s.getTransaction().commit();
-        s.close();
+        List results = null;
+        try {
+            s.beginTransaction();
+            Query query = s.createQuery("From Reimbursement r WHERE authorId = :id ")
+                    .setParameter("id", id);
+            results = query.getResultList();
+            s.getTransaction().commit();
+            s.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
         return results;
     }
 
@@ -92,13 +108,19 @@ public class ReimbursementsRepository {
      * @return one row containing the information about one Reimbursement
      */
     public List<Reimbursement> viewOneReimbursementEmployee(Integer id, Integer reimId){
-        s.beginTransaction();
-        Query query = s.createQuery("From Reimbursement WHERE authorId =: id and id = :reimId")
-                .setParameter("id",id)
-                .setParameter("reimId",reimId);
-        List<Reimbursement> results = query.getResultList();
-        s.getTransaction().commit();
-        s.close();
+        List<Reimbursement> results = null;
+        try {
+
+            s.beginTransaction();
+            Query query = s.createQuery("From Reimbursement WHERE authorId =: id and id = :reimId")
+                    .setParameter("id", id)
+                    .setParameter("reimId", reimId);
+            results = query.getResultList();
+            s.getTransaction().commit();
+            s.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
         return results;
     }
 
@@ -108,20 +130,25 @@ public class ReimbursementsRepository {
      * @return returns all reimbursement by status code
      */
     public List viewAllReimbursementbyStatus(ReimbursementStatus Status){
-        int statusnum = -1;
-        s.beginTransaction();
-        String baseQuery = "FROM User ";
-        String whereUserNPass = " WHERE username = :user AND password = :pass";
+        List results =null;
+        try {
+            int statusnum = -1;
+            s.beginTransaction();
+            String baseQuery = "FROM User ";
+            String whereUserNPass = " WHERE username = :user AND password = :pass";
 
 //        Query query = s.createQuery("From Reimbursement R WHERE R.reimbursementStatus = :Status").setParameter("Status",Status);
-        Query query = s.createQuery("From Reimbursement WHERE reimbursementStatus = :Status").setParameter("Status",Status);
-        List results = query.getResultList();
+            Query query = s.createQuery("From Reimbursement WHERE reimbursementStatus = :Status").setParameter("Status", Status);
+            results = query.getResultList();
 //        for(Reimbursement u : results){
 //           //u.setReimbursementStatus(statusHelper.convertToEntityAttribute(u.getReimbursementStatus().ordinal()+1));
 //           statusnum = u.getReimbursementStatus().ordinal();
 //        }
-        s.getTransaction().commit();
-        s.close();
+            s.getTransaction().commit();
+            s.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
 
         return results;
     }
@@ -132,15 +159,19 @@ public class ReimbursementsRepository {
      * @return returns all Reimbursement by the type of reimbursement
      */
     public List viewAllReimbursementbyType(ReimbursementType Type){
+        List results = null;
+        try {
+            s.beginTransaction();
 
-        s.beginTransaction();
 
+            Query query = s.createQuery("From Reimbursement WHERE reimbursementType = :Type").setParameter("Type", Type);
+            results = query.getResultList();
 
-        Query query = s.createQuery("From Reimbursement WHERE reimbursementType = :Type").setParameter("Type",Type);
-        List results = query.getResultList();
-
-        s.getTransaction().commit();
-        s.close();
+            s.getTransaction().commit();
+            s.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
 
         return results;
     }
@@ -152,8 +183,7 @@ public class ReimbursementsRepository {
      */
     public Optional<Reimbursement> getReimbursementById(Integer reimbursementId){
         Optional reimbursement = Optional.empty();
-
-
+        try {
             s.beginTransaction();
             String hql = "FROM Reimbursement r where r.id = :id";
             reimbursement = s.createQuery(hql)
@@ -162,6 +192,9 @@ public class ReimbursementsRepository {
                     .findFirst();
 
             s.close();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
         return reimbursement;
     }
 
