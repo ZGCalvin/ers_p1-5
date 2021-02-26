@@ -10,6 +10,10 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
+/**
+ *  adds the functionality to get the Role, get the user, add a user, delete a user, and update fields
+ *  for the user such as the password, email, etc.
+ */
 public class UserRepository {
     private Session s;
 
@@ -18,6 +22,12 @@ public class UserRepository {
     }
 
 
+    /**
+     *
+     * @param username user credential used in a where clause to find a specific record
+     * @param password user credential used in a where clause to find a specific record
+     * @return an int that represents the role recieved depending on the username and password given
+     */
     public int getRole(String username, String password){
         int role = 0;
         s.beginTransaction();
@@ -36,6 +46,12 @@ public class UserRepository {
     }
 
 
+    /**
+     *
+     * @param username user credential used in a where clause to find a specific record
+     * @param password user credential used in a where clause to find a specific record
+     * @return gives back the whole user that corresponds to the credentials given
+     */
     public User getUser(String username, String password){
         int role = 0;
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -59,6 +75,10 @@ public class UserRepository {
         return user;
     }
 
+    /**
+     *
+     * @param user takes in the user object given and saves it to the database
+     */
     public void addUser(User user){
         s.beginTransaction();
         s.save(user);
@@ -67,6 +87,11 @@ public class UserRepository {
 
     }
 
+    /**
+     *
+     * @param id  find the user associated with the id passed in and delete that user
+     * @return a true or false is given based on if the user was "deleted" or not
+     */
     public boolean deleteUser(Integer id){
 
             boolean updated = false;
@@ -87,6 +112,12 @@ public class UserRepository {
 
         }
 
+    /**
+     *
+     * @param id used to get the user associated with the the id from the session
+     * @param password holds the value that changes the database password will be changed to
+     * @return returns a boolean on if the field was updated
+     */
     public boolean updatePassword(Integer id,String password){
 
         boolean updated = false;
@@ -107,6 +138,12 @@ public class UserRepository {
 
     }
 
+    /**
+     *
+     * @param id used to get the user associated with the the id from the session
+     * @param email the information in the parameter will be the new information in the database for email
+     * @return returns a boolean on if the field was updated
+     */
     public boolean updateEmail(Integer id,String email){
 
         boolean updated = false;
@@ -127,6 +164,13 @@ public class UserRepository {
 
     }
 
+    /**
+     *
+     * @param id used to get the user associated with the the id from the session
+     * @param first the parameter holds the first name that will be updating the first name field in the database
+     * @param last the parameter holds the last name that will be updating the last name field in the database
+     * @return returns a boolean on if the field was updated
+     */
     public boolean updateFirstLast(Integer id,String first,String last){
 
         boolean updated = false;
@@ -148,6 +192,12 @@ public class UserRepository {
 
     }
 
+    /**
+     *
+     * @param id used to get the user associated with the the id from the session
+     * @param role integer representation of the role to be used to update the role in the database
+     * @return returns a boolean on if the field was updated
+     */
     public boolean updateStatus(Integer id,Integer role){
 
         boolean updated = false;
@@ -168,6 +218,10 @@ public class UserRepository {
 
     }
 
+    /**
+     *
+     * @return returns a List of all the users
+     */
     public List viewAllUsers(){
         s.beginTransaction();
         Query query = s.createQuery("From User");
