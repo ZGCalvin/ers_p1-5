@@ -22,6 +22,20 @@ import java.io.PrintWriter;
 )
 public class adminServlet extends HttpServlet {
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        PrintWriter pt = response.getWriter();
+        String method = request.getParameter("method");
+        if(UserSession.getUserSession().getSession().getAttribute("role").equals(1)) {
+            UserService userService = new UserService();
+            switch(method) {
+                case "ViewAll":
+                    pt.println(userService.viewAllUsers());
+            }
+
+
+        }
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter pt = response.getWriter();
         String method = request.getParameter("method");
@@ -71,6 +85,7 @@ public class adminServlet extends HttpServlet {
 
                    userService.updateRole(Integer.valueOf(Roleid),Role.getByName(Rolerole).ordinal()+1);
                    break;
+
                default:
                    response.setStatus(404);
            }

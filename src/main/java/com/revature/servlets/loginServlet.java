@@ -29,7 +29,7 @@ import java.util.List;
 public class loginServlet extends HttpServlet {
 
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         PrintWriter pt = response.getWriter();
         UserService userService;
@@ -44,10 +44,6 @@ public class loginServlet extends HttpServlet {
         role = userService.authenticateRole(user,pass);
 
 
-
-//        Session.getUserSession().createSession(request,userService.authenticate(user,pass));
-//        Session.getUserSession().validUser(request);
-//        Principal principal = (Principal) request.getAttribute("principal");
         HttpSession session = UserSession.getUserSession().createSession(request,userService.authenticate(user,pass));
 
         if(role == Role.ADMIN.ordinal()+1){

@@ -1,5 +1,6 @@
 package com.revature.servlets;
 
+import com.revature.hibernate.Reimbursements.ReimbursementService;
 import com.revature.hibernate.Reimbursements.ReimbursementsRepository;
 import com.revature.models.Reimbursement;
 import com.revature.models.ReimbursementStatus;
@@ -30,19 +31,31 @@ public class employeeServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter pt = response.getWriter();
+        String method = request.getParameter("method");
         if (UserSession.getUserSession().getSession().getAttribute("role").equals(3)) {
+            ReimbursementService reimService = new ReimbursementService();
+            switch (method) {
+            }
+            }
 
         }
 
-    }
+
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter pt = response.getWriter();
+        String method = request.getParameter("method");
         if (UserSession.getUserSession().getSession().getAttribute("role").equals(3)) {
+            ReimbursementService reimService = new ReimbursementService();
+            switch (method) {
+
+
+            }
+            }
 
         }
 
     }
 
 
-}
+
