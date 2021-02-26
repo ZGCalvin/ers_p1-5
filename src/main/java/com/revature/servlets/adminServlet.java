@@ -32,6 +32,8 @@ public class adminServlet extends HttpServlet {
                 case "ViewAll":
                     //pt.println(userService.viewAllUsers());
                     printSelect.printRowWithOut(userService.viewAllUsers(),pt);
+                default:
+                    response.setStatus(404);
             }
 
 
