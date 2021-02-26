@@ -83,7 +83,7 @@ public class ReimbursementsRepository {
         String whereUserNPass = " WHERE username = :user AND password = :pass";
 
 //        Query query = s.createQuery("From Reimbursement R WHERE R.reimbursementStatus = :Status").setParameter("Status",Status);
-        Query query = s.createQuery("Select reimbursementStatus From Reimbursement WHERE reimbursementStatus = :Status").setParameter("Status",Status);
+        Query query = s.createQuery("From Reimbursement WHERE reimbursementStatus = :Status").setParameter("Status",Status);
         List results = query.getResultList();
 //        for(Reimbursement u : results){
 //           //u.setReimbursementStatus(statusHelper.convertToEntityAttribute(u.getReimbursementStatus().ordinal()+1));
@@ -100,7 +100,7 @@ public class ReimbursementsRepository {
         s.beginTransaction();
 
 
-        Query query = s.createQuery("Select reimbursementType From Reimbursement WHERE reimbursementType = :Type").setParameter("Type",Type);
+        Query query = s.createQuery("From Reimbursement WHERE reimbursementType = :Type").setParameter("Type",Type);
         List results = query.getResultList();
 
         s.getTransaction().commit();

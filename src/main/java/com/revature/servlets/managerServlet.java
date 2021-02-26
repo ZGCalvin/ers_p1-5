@@ -2,6 +2,7 @@ package com.revature.servlets;
 
 
 import com.revature.hibernate.Reimbursements.ReimbursementService;
+import com.revature.models.Reimbursement;
 import com.revature.models.ReimbursementStatus;
 import com.revature.models.ReimbursementType;
 import com.revature.util.StatusHelper;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.List;
 
 @WebServlet(
@@ -66,15 +68,50 @@ public class managerServlet extends HttpServlet {
 
         if (UserSession.getUserSession().getSession().getAttribute("role").equals(2)) {
             ReimbursementService reimService = new ReimbursementService();
+            StatusHelper statusHelper = new StatusHelper();
+            boolean updated;
+            Integer integer;
+            String reimbursementid;
+            String resolverid;
             switch (method) {
                 case "Add":
-                    //reimService.addReimbursement( );
+                    String amount = request.getParameter("amount");
+                    String description = request.getParameter("description");
+                    String authorId = request.getParameter("authorId");
+                    //  String status = request.getParameter("status");
+                    String type = request.getParameter("type");
+
+                    Reimbursement reimbursement = new Reimbursement(
+                    Double.valueOf(amount),//amount
+                    description,//description
+                    Integer.parseInt(authorId),//author ID
+                    ReimbursementStatus.getByNumber(1),//reimbursement status
+                    ReimbursementType.getByName(type));// reimbursement type
+                    reimService.addReimbursement( reimbursement);
                     break;
                 case "UpdateResolver":
-                    //reimService.updateResolverByReimbursementId();
+                    reimbursementid = request.getParameter("Rid");
+                    resolverid = request.getParameter("Myid");
+                    updated = reimService.updateResolverByReimbursementId(Integer.valueOf(reimbursementid),Integer.valueOf(resolverid));
+                    if(updated){
+                    pt.println("Updated Resolver");
+                    }
+                    else{
+                    pt.println("Not updated");
+                    }
                     break;
                 case "UpdateStatusTime":
-                    //reimService.updateStatusTime()
+                    reimbursementid = request.getParameter("Rid");
+                    String status = request.getParameter("status");
+                    integer = ReimbursementStatus.getByName(status).ordinal()+1;
+                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                    updated = reimService.updateStatusTime(Integer.valueOf(reimbursementid), timestamp,statusHelper.convertToEntityAttribute(integer));
+                    if(updated){
+                        pt.println("Updated Status and Time");
+                    }
+                    else{
+                        pt.println("Not updated");
+                    }
                     break;
                 default:
                     response.setStatus(404);
