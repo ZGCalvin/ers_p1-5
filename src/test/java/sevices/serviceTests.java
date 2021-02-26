@@ -43,7 +43,8 @@ public class serviceTests {
     @After
     public void tearDown() {
         testUserService.deleteUser(100);
-
+        testUser= null;
+        testUserService = null;
         try {
             List<User> queryRead = testUserService.viewAllUsers();
             System.out.println("<-----------------LISTING READ QUERY RESULTS--------------------->");

@@ -76,7 +76,7 @@ public class managerServlet extends HttpServlet {
             }
         }
         else{
-            response.setStatus(403);
+            response.setStatus(401);
         }
 
 
@@ -103,25 +103,11 @@ public class managerServlet extends HttpServlet {
             String resolverid;
 
             switch (method) {
-                case "Add":
-                    String amount = request.getParameter("amount");
-                    String description = request.getParameter("description");
-                    String authorId = request.getParameter("authorId");
-                    //  String status = request.getParameter("status");
-                    String type = request.getParameter("type");
 
-                    Reimbursement reimbursement = new Reimbursement(
-                    Double.valueOf(amount),//amount
-                    description,//description
-                    Integer.parseInt(authorId),//author ID
-                    ReimbursementStatus.getByNumber(1),//reimbursement status
-                    ReimbursementType.getByName(type));// reimbursement type
-                    reimService.addReimbursement( reimbursement);
-                    break;
                 case "UpdateResolver":
                     reimbursementid = request.getParameter("Rid");
-                    resolverid = request.getParameter("Myid");
-                    updated = reimService.updateResolverByReimbursementId(Integer.valueOf(reimbursementid),Integer.valueOf(resolverid));
+                    //resolverid = request.getParameter("Myid");
+                    updated = reimService.updateResolverByReimbursementId(Integer.valueOf(reimbursementid),(Integer) UserSession.getUserSession().getSession().getAttribute("user_id"));
                     if(updated){
                     pt.println("Updated Resolver");
                     }
@@ -148,7 +134,7 @@ public class managerServlet extends HttpServlet {
 
         }
         else{
-            response.setStatus(403);
+            response.setStatus(401);
         }
     }
 }

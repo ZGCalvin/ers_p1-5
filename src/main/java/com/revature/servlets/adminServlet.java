@@ -52,7 +52,7 @@ public class adminServlet extends HttpServlet {
 
         }
         else{
-            response.setStatus(403);
+            response.setStatus(401);
         }
     }
 
@@ -73,6 +73,7 @@ public class adminServlet extends HttpServlet {
            String email;
            String lastname;
            String firstname;
+           boolean updated;
 
            switch (method){
 
@@ -83,13 +84,19 @@ public class adminServlet extends HttpServlet {
                    lastname = request.getParameter("lastname");
                    email = request.getParameter("email");
                    String role = request.getParameter("role");
-                   User newUser = new User(username,password,firstname,lastname,email,Role.getByName(role).ordinal()+1);
-                   userService.AddUser(newUser);
-                   pt.println("Added User" + firstname + lastname);
+                   User NEWUser = new User(username,password,firstname,lastname,email,Role.getByName(role).ordinal()+1);
+                   updated = userService.AddUser(NEWUser);
+                   if (updated) {
+                       pt.println("Added User : " + firstname + lastname);
+                   }
+                   else{
+                       pt.println("Not added");
+                   }
                    break;
                case "Delete" :
                     id = request.getParameter("id");
                    userService.deleteUser(Integer.valueOf(id));
+                   pt.println("Deleted User: " + id);
                             break;
                case "UpdatePassword":
                    String UPid = request.getParameter("id");
@@ -124,7 +131,7 @@ public class adminServlet extends HttpServlet {
 
        }
        else{
-           response.setStatus(403);
+           response.setStatus(401);
        }
 
 

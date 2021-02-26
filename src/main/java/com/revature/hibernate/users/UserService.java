@@ -43,9 +43,9 @@ public class UserService {
      *
      * @param user takes in the user passed in and call the userRepo addUser to save to the database
      */
-    public void AddUser(User user){
+    public boolean AddUser(User user){
         if (!isUserValid(user)) throw new InvalidRequestException();
-        userRepo.addUser(user);
+        return userRepo.addUser(user);
 
     }
 

@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -91,15 +92,20 @@ public class UserRepository {
      *
      * @param user takes in the user object given and saves it to the database
      */
-    public void addUser(User user){
+    public boolean addUser(User user){
+        Session session;
+        boolean updated = false;
         try {
-            s.beginTransaction();
-            s.save(user);
-            s.getTransaction().commit();
-            s.close();
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(user);
+            session.getTransaction().commit();
+            session.close();
+            updated = true;
         } catch (HibernateException e) {
             logger.error("Failed",e);
         }
+        return updated;
     }
 
     /**
@@ -113,6 +119,7 @@ public class UserRepository {
 
            User user;
             try {
+                    s = HibernateUtil.getSessionFactory().openSession();
                     s.beginTransaction();
                     user = s.get(User.class, id);
                     s.delete(user);
@@ -138,6 +145,7 @@ public class UserRepository {
         boolean updated = false;
         User user;
         try {
+            s = HibernateUtil.getSessionFactory().openSession();
             s.beginTransaction();
             user = s.get(User.class, id);
             user.setPassword(password);
@@ -191,6 +199,7 @@ public class UserRepository {
         boolean updated = false;
         User user;
         try {
+            s = HibernateUtil.getSessionFactory().openSession();
             s.beginTransaction();
             user = s.get(User.class, id);
             user.setFirstname(first);
@@ -218,6 +227,7 @@ public class UserRepository {
         boolean updated = false;
         User user;
         try {
+            s = HibernateUtil.getSessionFactory().openSession();
             s.beginTransaction();
             user = s.get(User.class, id);
             user.setUserRole(role);
@@ -240,6 +250,7 @@ public class UserRepository {
     public List viewAllUsers(){
         List results = null;
         try {
+            s = HibernateUtil.getSessionFactory().openSession();
             s.beginTransaction();
             Query query = s.createQuery("From User");
             results = query.getResultList();

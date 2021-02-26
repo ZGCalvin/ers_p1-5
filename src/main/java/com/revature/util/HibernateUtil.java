@@ -17,7 +17,14 @@ public class HibernateUtil {
         try {
 
             // Create the SessionFactory from hibernate.cfg.xml
-            return new Configuration().configure(new File("src/main/resources/hibernate.cfg.xml")).buildSessionFactory();
+            //return new Configuration().configure(new File("src/main/java/resources/hibernate.cfg.xml")).buildSessionFactory();
+
+            try {
+                //if on the web
+                return new Configuration().configure(new File("webapps/test/WEB-INF/hibernateConfig/hibernate.cfg.xml")).buildSessionFactory();
+            } catch (Exception e) {
+                return new Configuration().configure(new File("hibernate.cfg.xml")).buildSessionFactory();
+            }
         }
         catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed

@@ -59,7 +59,7 @@ public class ReimbursementService {
      * @return a list of all reimbursements of a single reimbursement status
      */
     public List viewAllReimbursementByStatus(ReimbursementStatus status){
-        if(isReimbursementStatusValid(status)){throw new InvalidRequestException();}
+        if(!isReimbursementStatusValid(status)){throw new InvalidRequestException();}
         return reimRepo.viewAllReimbursementbyStatus(status);
     }
 
@@ -69,7 +69,7 @@ public class ReimbursementService {
      * @return a list of all reimbursements of a single reimbursement type
      */
     public List viewAllReimbursementByType(ReimbursementType type){
-        if(isReimbursementTypeValid(type)){throw new InvalidRequestException();}
+        if(!isReimbursementTypeValid(type)){throw new InvalidRequestException();}
         return reimRepo.viewAllReimbursementbyType(type);
     }
 
@@ -98,7 +98,7 @@ public class ReimbursementService {
      * @return  true if successful, false otherwise
      */
     public boolean updateStatusTime(Integer reimbursementId, Timestamp date, ReimbursementStatus status){
-        if(isReimbursementStatusValid(status)){throw new InvalidRequestException();}
+        if(!isReimbursementStatusValid(status)){throw new InvalidRequestException();}
         return reimRepo.updateStatusTime(reimbursementId,date,status);
     }
 
@@ -111,7 +111,7 @@ public class ReimbursementService {
      * @return true if successful, false otherwise
      */
     public boolean updatePendingRowAll(Integer reimbursementId, Double amount, String description, ReimbursementType type){
-        if(isReimbursementTypeValid(type)){throw new InvalidRequestException();}
+        if(!isReimbursementTypeValid(type)){throw new InvalidRequestException();}
         return reimRepo.updatePendingRowAll(reimbursementId, amount,description, type);
     }
 
@@ -122,7 +122,7 @@ public class ReimbursementService {
      * @return true if successful, false otherwise
      */
     public boolean updatePendingRowType(Integer rId, ReimbursementType type){
-        if(isReimbursementTypeValid(type)){throw new InvalidRequestException();}
+        if(!isReimbursementTypeValid(type)){throw new InvalidRequestException();}
         return reimRepo.updatePendingRowType(rId,type);
     }
 
@@ -161,6 +161,7 @@ public class ReimbursementService {
                 r != ReimbursementStatus.DENIED &&
                 r != ReimbursementStatus.CLOSED) return false;
         return true;
+       // return false;
     }
 
     /**
@@ -175,5 +176,6 @@ public class ReimbursementService {
                 t != ReimbursementType.TRAVEL &&
                 t != ReimbursementType.LODGING) return false;
         return true;
+       // return false;
     }
 }

@@ -155,15 +155,13 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", email='" + email + '\'' +
-                ", userRole=" + userRole +
-                '}';
+        return "userId=" + userId +
+                " username= " + username + ' ' +" " +
+                " password= " + password + ' ' +" " +
+                " firstname= " + firstname + ' ' +" " +
+                " lastname= " + lastname + ' ' +" " +
+                " email= " + email + ' ' +" " +
+                " userRole= " + userRole;
     }
 }
 

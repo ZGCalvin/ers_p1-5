@@ -223,16 +223,14 @@ public class Reimbursement {
 
     @Override
     public String toString() {
-        return "Reimbursement{" +
-                "id='" + id + '\'' +
-                ", amount=" + amount +
-                ", submitted=" + submitted +
-                ", resolved=" + resolved +
-                ", description='" + description + '\'' +
-                ", authorId=" + authorId +
-                ", resolverId=" + resolverId +
-                ", reimbursementStatus=" + reimbursementStatus +
-                ", reimbursementType=" + reimbursementType +
-                '}';
+        return "id= " + id + " " +' ' + " " +
+                " amount= " + amount +' ' +" " +
+                " submitted= " + submitted +' ' +" " +
+                " resolved= " + resolved +' ' +" " +
+                " description= " + description + ' ' +" " +
+                " authorId= " + authorId +' ' +" " +
+                " resolverId= " + resolverId +' ' +" " +
+                " reimbursementStatus= " + reimbursementStatus +' ' +" " +
+                " reimbursementType= " + reimbursementType ;
     }
 }

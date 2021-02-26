@@ -67,7 +67,6 @@ public class employeeServlet extends HttpServlet {
                     reimId = request.getParameter("Rid");
                     reimList = reimService.viewOneReimbursementEmployee((Integer) UserSession.getUserSession()
                                     .getSession().getAttribute("user_id"),Integer.valueOf(reimId));
-                    pt.println("Reimbursement: " + reimList);
                     printSelect.printRow(reimList,pt);
                     break;
                 default:
@@ -75,7 +74,7 @@ public class employeeServlet extends HttpServlet {
             }
             }
         else{
-            response.setStatus(403);
+            response.setStatus(401);
         }
 
         }
@@ -101,6 +100,7 @@ public class employeeServlet extends HttpServlet {
             String amount;
             String description;
 
+
             switch (method) {
 
                 case "UpdateAll" :
@@ -110,6 +110,7 @@ public class employeeServlet extends HttpServlet {
                     type = request.getParameter("type");
 
                     integer = ReimbursementType.getByName(type).ordinal()+1;
+                    //integer=ReimbursementType.valueOf(type).ordinal()+1;
                     updated = reimService.updatePendingRowAll(Integer.valueOf(reimtId),Double.valueOf(amount),description,typeHelper.convertToEntityAttribute(integer));
                     if(updated){
                         pt.println("Updated amount, description,and type");
@@ -123,6 +124,7 @@ public class employeeServlet extends HttpServlet {
                     reimtId = request.getParameter("Rid");
                     type = request.getParameter("type");
                     integer = ReimbursementType.getByName(type).ordinal()+1;
+                    //integer=ReimbursementType.valueOf(type).ordinal()+1;
                     updated = reimService.updatePendingRowType(Integer.valueOf(reimtId),typeHelper.convertToEntityAttribute(integer));
                     if(updated){
                         pt.println("Updated type");
@@ -157,12 +159,28 @@ public class employeeServlet extends HttpServlet {
                         pt.println("Not updated");
                     }
                     break;
+
+                case "Add":
+                     amount = request.getParameter("amount");
+                    description = request.getParameter("description");
+                    //String authorId = request.getParameter("authorId");
+                    //  String status = request.getParameter("status");
+                     type = request.getParameter("type");
+
+                    Reimbursement reimbursement = new Reimbursement(
+                            Double.valueOf(amount),//amount
+                            description,//description
+                           (Integer) UserSession.getUserSession().getSession().getAttribute("user_id"),//author ID
+                            ReimbursementStatus.getByNumber(1),//reimbursement status
+                            ReimbursementType.getByName(type));// reimbursement type
+                    reimService.addReimbursement(reimbursement);
+                    pt.println("Added Reimbursement");
                 default:
                     response.setStatus(404);
             }
             }
         else{
-            response.setStatus(403);
+            response.setStatus(401);
         }
 
         }
