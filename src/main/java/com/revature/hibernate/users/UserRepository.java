@@ -5,6 +5,8 @@ import com.revature.models.ReimbursementStatus;
 import com.revature.models.ReimbursementType;
 import com.revature.models.User;
 import com.revature.util.HibernateUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -16,6 +18,7 @@ import java.util.List;
  *  for the user such as the password, email, etc.
  */
 public class UserRepository {
+    private static final Logger logger = LogManager.getLogger(UserRepository.class);
     private Session s;
 
     public UserRepository(){
@@ -44,7 +47,7 @@ public class UserRepository {
             s.getTransaction().commit();
             s.close();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
 
         return role;
@@ -78,7 +81,7 @@ public class UserRepository {
             session.getTransaction().commit();
             session.close();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
 
         return user;
@@ -95,7 +98,7 @@ public class UserRepository {
             s.getTransaction().commit();
             s.close();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
     }
 
@@ -117,7 +120,7 @@ public class UserRepository {
                     updated = true;
             }
             catch(Exception e){
-                e.printStackTrace();
+                logger.error("Failed",e);
             }
             s.close();
             return updated;
@@ -143,7 +146,7 @@ public class UserRepository {
             updated = true;
         }
         catch(Exception e){
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         s.close();
         return updated;
@@ -169,7 +172,7 @@ public class UserRepository {
             updated = true;
         }
         catch(Exception e){
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         s.close();
         return updated;
@@ -197,7 +200,7 @@ public class UserRepository {
             updated = true;
         }
         catch(Exception e){
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         s.close();
         return updated;
@@ -223,7 +226,7 @@ public class UserRepository {
             updated = true;
         }
         catch(Exception e){
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         s.close();
         return updated;
@@ -243,7 +246,7 @@ public class UserRepository {
             s.getTransaction().commit();
             s.close();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         return results;
     }

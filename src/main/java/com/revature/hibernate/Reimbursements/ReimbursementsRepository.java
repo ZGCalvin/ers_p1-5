@@ -7,6 +7,8 @@ import com.revature.models.ReimbursementType;
 import com.revature.models.User;
 import com.revature.util.HibernateUtil;
 import com.revature.util.StatusHelper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -21,6 +23,7 @@ import java.util.Optional;
  */
 public class ReimbursementsRepository {
 
+    private static final Logger logger = LogManager.getLogger(ReimbursementsRepository.class);
     private Session s;
     private StatusHelper statusHelper;
     private String baseInsert = "INSERT INTO Reimbursement ";
@@ -45,7 +48,7 @@ public class ReimbursementsRepository {
             s.getTransaction().commit();
             s.close();
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
 
     }
@@ -65,7 +68,7 @@ public class ReimbursementsRepository {
             return results;
         }
         catch (Exception e){
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         return results;
     }
@@ -95,7 +98,7 @@ public class ReimbursementsRepository {
             s.getTransaction().commit();
             s.close();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         return results;
     }
@@ -119,7 +122,7 @@ public class ReimbursementsRepository {
             s.getTransaction().commit();
             s.close();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         return results;
     }
@@ -147,7 +150,7 @@ public class ReimbursementsRepository {
             s.getTransaction().commit();
             s.close();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
 
         return results;
@@ -170,7 +173,7 @@ public class ReimbursementsRepository {
             s.getTransaction().commit();
             s.close();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
 
         return results;
@@ -193,7 +196,7 @@ public class ReimbursementsRepository {
 
             s.close();
         } catch (HibernateException e) {
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         return reimbursement;
     }
@@ -217,7 +220,7 @@ public class ReimbursementsRepository {
             updated = true;
         }
         catch(Exception e){
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         s.close();
         return updated;
@@ -244,7 +247,7 @@ public class ReimbursementsRepository {
             updated = true;
         }
         catch(Exception e){
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         s.close();
         return updated;
@@ -285,7 +288,7 @@ public class ReimbursementsRepository {
             }
         }
         catch(Exception e){
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         s.close();
         return updated;
@@ -324,7 +327,7 @@ public class ReimbursementsRepository {
             }
         }
         catch(Exception e){
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         s.close();
         return updated;
@@ -363,7 +366,7 @@ public class ReimbursementsRepository {
             }
         }
         catch(Exception e){
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         s.close();
         return updated;
@@ -401,7 +404,7 @@ public class ReimbursementsRepository {
             }
         }
         catch(Exception e){
-            e.printStackTrace();
+            logger.error("Failed",e);
         }
         s.close();
         return updated;
