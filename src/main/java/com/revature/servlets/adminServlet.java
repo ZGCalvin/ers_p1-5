@@ -19,10 +19,23 @@ import java.io.PrintWriter;
         description= "Admin page",
         urlPatterns = {"/adminServlet"}
 )
+
+/**
+ * a servlet class that has a doGet and a doPost in it
+ * the get can view all the Users and format it
+ * the post can add a new user, update an existing user's fields and delete will "delete" the user
+ */
 public class adminServlet extends HttpServlet {
 
     private PrintSelect printSelect = new PrintSelect();
 
+    /**
+     *
+     * @param request gets the information from the user
+     * @param response can give something back to the user for example a status code
+     * @throws IOException error if something goes wrong with writting or getting information
+     * @throws ServletException error if something goes wrong with the servlet
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter pt = response.getWriter();
         String method = request.getParameter("method");
@@ -43,6 +56,13 @@ public class adminServlet extends HttpServlet {
         }
     }
 
+    /**
+     *
+     * @param request gets the information from the user
+     * @param response can give something back to the user for example a status code
+     * @throws IOException error if something goes wrong with writting or getting information
+     * @throws ServletException error if something goes wrong with the servlet
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter pt = response.getWriter();
         String method = request.getParameter("method");

@@ -15,11 +15,21 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet(name = "session", urlPatterns = {"/session"})
+/**
+ *  here for JSON be we didnt have time to implement
+ */
 public class SessionServlet extends HttpServlet {
 
     // TODO: try to avoid direct instantiation of service object here
     private final UserService userService = new UserService();
 
+    /**
+     *
+     * @param req gets the information from the user
+     * @param resp can give something back to the user for example a status code
+     * @throws IOException error if something goes wrong with writting or getting information
+     * @throws ServletException error if something goes wrong with the servlet
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -27,6 +37,13 @@ public class SessionServlet extends HttpServlet {
         resp.getWriter().write(req.getSession().getId());
     }
 
+    /**
+     *
+     * @param req gets the information from the user
+     * @param resp can give something back to the user for example a status code
+     * @throws IOException error if something goes wrong with writting or getting information
+     * @throws ServletException error if something goes wrong with the servlet
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -60,6 +77,13 @@ public class SessionServlet extends HttpServlet {
 
     }
 
+    /**
+     *
+     * @param req gets the information from the user
+     * @param resp can give something back to the user for example a status code
+     * @throws IOException error if something goes wrong with writting or getting information
+     * @throws ServletException error if something goes wrong with the servlet
+     */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getSession().invalidate();

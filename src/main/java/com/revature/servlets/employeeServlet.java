@@ -28,10 +28,23 @@ import java.util.Optional;
         description= "Employee Screen",
         urlPatterns = {"/employeeServlet"}
 )
+
+/**
+ *  Employee has a doGet and doPost
+ *  doGet can allow employee to view all their reimbursments and view a specific reimbursment by their id
+ *  doPost can allow employee to update fields of the reimbursement if the status is still pending
+ */
 public class employeeServlet extends HttpServlet {
 
     private PrintSelect printSelect = new PrintSelect();
 
+    /**
+     *
+     * @param request gets the information from the user
+     * @param response can give something back to the user for example a status code
+     * @throws IOException error if something goes wrong with writting or getting information
+     * @throws ServletException error if something goes wrong with the servlet
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter pt = response.getWriter();
         String method = request.getParameter("method");
@@ -68,7 +81,13 @@ public class employeeServlet extends HttpServlet {
         }
 
 
-
+    /**
+     *
+     * @param request gets the information from the user
+     * @param response can give something back to the user for example a status code
+     * @throws IOException error if something goes wrong with writting or getting information
+     * @throws ServletException error if something goes wrong with the servlet
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter pt = response.getWriter();
         String method = request.getParameter("method");

@@ -11,8 +11,9 @@ import java.util.List;
 public class PrintSelect {
 
     /**
-     * Prints the rows of the entity list
-     * @param session
+     *  formats a select query so that it looks a little cleaner
+     * @param session a List to be iterated through
+     * @param pt pass in the printWriter to format
      */
     public void printRow(List<?> session, PrintWriter pt) {
         Iterator<?> i = session.iterator();
@@ -21,6 +22,11 @@ public class PrintSelect {
         }
     }
 
+    /**
+     *  formats a select query so that it looks a little cleaner
+     * @param session a List to be iterated through
+     * @param pt pass in the printWriter to format
+     */
     public void printRowWithOut(List session, PrintWriter pt) {
         Iterator<?> i = session.iterator();
         while (i.hasNext()) {

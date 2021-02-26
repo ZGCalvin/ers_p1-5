@@ -25,10 +25,22 @@ import java.util.List;
         description= "manager page",
         urlPatterns = {"/managerServlet"}
 )
+
+/**
+ *  manager has a doGet and a doPost
+ *  doGet can view all reimbursements, and can view them by their status or their type
+ */
 public class managerServlet extends HttpServlet {
 
     private PrintSelect printSelect = new PrintSelect();
 
+    /**
+     *
+     * @param request gets the information from the user
+     * @param response can give something back to the user for example a status code
+     * @throws IOException error if something goes wrong with writting or getting information
+     * @throws ServletException error if something goes wrong with the servlet
+     * */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter pt = response.getWriter();
         String method = request.getParameter("method");
@@ -71,6 +83,13 @@ public class managerServlet extends HttpServlet {
 
     }
 
+    /**
+     *
+     * @param request gets the information from the user
+     * @param response can give something back to the user for example a status code
+     * @throws IOException error if something goes wrong with writting or getting information
+     * @throws ServletException error if something goes wrong with the servlet
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter pt = response.getWriter();
         String method = request.getParameter("method");

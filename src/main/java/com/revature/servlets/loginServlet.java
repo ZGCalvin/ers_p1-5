@@ -19,9 +19,18 @@ import java.io.PrintWriter;
         description= "Login Screen",
         urlPatterns = {"/loginServlet"}
 )
+/**
+ *  the login only has a doPost because after the user is logged in other servlets can be used to do specific things
+ */
 public class loginServlet extends HttpServlet {
 
-
+    /**
+     *
+     * @param request gets the information from the user
+     * @param response can give something back to the user for example a status code
+     * @throws IOException error if something goes wrong with writting or getting information
+     * @throws ServletException error if something goes wrong with the servlet
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         PrintWriter pt = response.getWriter();
