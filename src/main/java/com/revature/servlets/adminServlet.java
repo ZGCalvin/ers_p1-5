@@ -3,6 +3,7 @@ package com.revature.servlets;
 import com.revature.hibernate.users.UserService;
 import com.revature.models.Role;
 import com.revature.models.User;
+import com.revature.util.PrintSelect;
 import com.revature.util.Session;
 import com.revature.util.UserSession;
 
@@ -22,6 +23,8 @@ import java.io.PrintWriter;
 )
 public class adminServlet extends HttpServlet {
 
+    private PrintSelect printSelect = new PrintSelect();
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter pt = response.getWriter();
         String method = request.getParameter("method");
@@ -29,10 +32,14 @@ public class adminServlet extends HttpServlet {
             UserService userService = new UserService();
             switch(method) {
                 case "ViewAll":
-                    pt.println(userService.viewAllUsers());
+                    //pt.println(userService.viewAllUsers());
+                    printSelect.printRowWithOut(userService.viewAllUsers(),pt);
             }
 
 
+        }
+        else{
+            response.setStatus(403);
         }
     }
 
@@ -58,6 +65,7 @@ public class adminServlet extends HttpServlet {
                    String role = request.getParameter("role");
                    User newUser = new User(username,password,firstname,lastname,email,Role.getByName(role).ordinal()+1);
                    userService.AddUser(newUser);
+                   pt.println("Added User" + firstname + lastname);
                    break;
                case "Delete" :
                     id = request.getParameter("id");
@@ -67,23 +75,27 @@ public class adminServlet extends HttpServlet {
                    String UPid = request.getParameter("id");
                    String UPpassword = request.getParameter("password");
                    userService.updatePassword(Integer.valueOf(UPid),UPpassword);
+                   pt.println("Updated Password");
                             break;
                case "UpdateEmail":
                    id = request.getParameter("id");
                    email = request.getParameter("email");
                    userService.updateEmail(Integer.valueOf(id),email);
+                   pt.println("Updated Email");
                    break;
                case "UpdateName":
                    id = request.getParameter("id");
                    firstname = request.getParameter("firstname");
                    lastname = request.getParameter("lastname");
                    userService.updateFirstLast(Integer.valueOf(id),firstname,lastname);
+                   pt.println("Updated Full Name");
                    break;
                case "UpdateRole":
                    String Roleid = request.getParameter("id");
                    String Rolerole = request.getParameter("role");
 
                    userService.updateRole(Integer.valueOf(Roleid),Role.getByName(Rolerole).ordinal()+1);
+                   pt.println("Updated User Role");
                    break;
 
                default:
@@ -91,7 +103,10 @@ public class adminServlet extends HttpServlet {
            }
 
        }
+       else{
+           response.setStatus(403);
+       }
 
-        pt.println("name "+ UserSession.getUserSession().getSession().getAttribute("fullname"));
+
     }
 }

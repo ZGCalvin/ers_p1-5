@@ -52,17 +52,19 @@ public class loginServlet extends HttpServlet {
 
         }
         else if(role == Role.FINANCE_MANAGER.ordinal()+1){
+            pt.println("Session User: "+ session.getAttribute("fullname"));
             pt.println("Finance Manager");
         }
         else if(role == Role.EMPLOYEE.ordinal()+1){
+            pt.println("Session User: "+ session.getAttribute("fullname"));
             pt.println("Employee");
         }
         else{
             pt.println("Not a valid User");
+            response.setStatus(401);
         }
 
         pt.println("Login Screen");
-        pt.println("user role number : " + role);
 
     }
 

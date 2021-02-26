@@ -5,6 +5,7 @@ import com.revature.hibernate.Reimbursements.ReimbursementsRepository;
 import com.revature.models.Reimbursement;
 import com.revature.models.ReimbursementStatus;
 import com.revature.models.ReimbursementType;
+import com.revature.util.PrintSelect;
 import com.revature.util.StatusHelper;
 import com.revature.util.TypeHelper;
 import com.revature.util.UserSession;
@@ -29,6 +30,8 @@ import java.util.Optional;
 )
 public class employeeServlet extends HttpServlet {
 
+    private PrintSelect printSelect = new PrintSelect();
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter pt = response.getWriter();
         String method = request.getParameter("method");
@@ -44,18 +47,23 @@ public class employeeServlet extends HttpServlet {
                 case "ViewMyReim":
 
                     results = reimService.viewAllReimbursementEmployee((Integer) UserSession.getUserSession().getSession().getAttribute("user_id"));
-                    pt.println("All My Reimbursements: " + results);
+                    pt.println("All My Reimbursements: ");
+                    printSelect.printRowWithOut(results,pt);
                     break;
                 case "ViewReimById" :
                     reimId = request.getParameter("Rid");
                     reimList = reimService.viewOneReimbursementEmployee((Integer) UserSession.getUserSession()
                                     .getSession().getAttribute("user_id"),Integer.valueOf(reimId));
                     pt.println("Reimbursement: " + reimList);
+                    printSelect.printRow(reimList,pt);
                     break;
                 default:
                     response.setStatus(404);
             }
             }
+        else{
+            response.setStatus(403);
+        }
 
         }
 
@@ -134,6 +142,9 @@ public class employeeServlet extends HttpServlet {
                     response.setStatus(404);
             }
             }
+        else{
+            response.setStatus(403);
+        }
 
         }
 

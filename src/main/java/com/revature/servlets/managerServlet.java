@@ -5,6 +5,7 @@ import com.revature.hibernate.Reimbursements.ReimbursementService;
 import com.revature.models.Reimbursement;
 import com.revature.models.ReimbursementStatus;
 import com.revature.models.ReimbursementType;
+import com.revature.util.PrintSelect;
 import com.revature.util.StatusHelper;
 import com.revature.util.TypeHelper;
 import com.revature.util.UserSession;
@@ -20,12 +21,13 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @WebServlet(
-        name="mangerServlet",
+        name="managerServlet",
         description= "manager page",
         urlPatterns = {"/managerServlet"}
 )
 public class managerServlet extends HttpServlet {
 
+    private PrintSelect printSelect = new PrintSelect();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter pt = response.getWriter();
@@ -39,25 +41,32 @@ public class managerServlet extends HttpServlet {
             List results;
             switch (method) {
                 case "ViewAll":
-                    pt.println("All Reimbursements :"  +reimService.viewAllReimbursement());
+                    pt.println("All Reimbursements :");
+                    printSelect.printRowWithOut(reimService.viewAllReimbursement(),pt);
                     break;
                 case "ViewAllByStatus":
                     String status = request.getParameter("status");
                     integer = ReimbursementStatus.getByName(status).ordinal()+1;
                     results = reimService.viewAllReimbursementByStatus(statusHelper.convertToEntityAttribute(integer));
-                    pt.println("View All Reimbursements By Status: " +results);
+                    pt.println("View All Reimbursements By Status: ");
+                    printSelect.printRowWithOut(results,pt);
                     break;
                 case "ViewAllByType":
                     String type = request.getParameter("type");
                     integer = ReimbursementType.getByName(type).ordinal()+1;
                     results = reimService.viewAllReimbursementByType(typeHelper.convertToEntityAttribute(integer));
-                    pt.println("View All Reimbursements By Type: " +results);
+                    pt.println("View All Reimbursements By Type: " );
+                    printSelect.printRowWithOut(results,pt);
                     break;
                 default:
                     response.setStatus(404);
 
             }
         }
+        else{
+            response.setStatus(403);
+        }
+
 
 
     }
@@ -73,6 +82,7 @@ public class managerServlet extends HttpServlet {
             Integer integer;
             String reimbursementid;
             String resolverid;
+
             switch (method) {
                 case "Add":
                     String amount = request.getParameter("amount");
@@ -117,6 +127,9 @@ public class managerServlet extends HttpServlet {
                     response.setStatus(404);
             }
 
+        }
+        else{
+            response.setStatus(403);
         }
     }
 }
