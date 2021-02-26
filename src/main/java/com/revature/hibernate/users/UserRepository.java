@@ -168,5 +168,14 @@ public class UserRepository {
 
     }
 
+    public List viewAllUsers(){
+        s.beginTransaction();
+        Query query = s.createQuery("From User");
+        List results = query.getResultList();
+        s.getTransaction().commit();
+        s.close();
+        return results;
+    }
+
 
 }

@@ -56,7 +56,9 @@ public class UserService {
         return userRepo.updateStatus(id,role);
     }
 
-
+    public List viewAllUsers(){
+        return userRepo.viewAllUsers();
+    }
 
 
 }
